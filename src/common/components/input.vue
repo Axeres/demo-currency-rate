@@ -51,7 +51,7 @@ export default Vue.component 'x-input', {
   margin-bottom: 1rem
   background: transparent
   border-bottom: 1px solid $input-color-light_5
-  height: fit-content
+  height: 2.3rem
 
   .input
     position: relative
@@ -67,6 +67,7 @@ export default Vue.component 'x-input', {
     display: block
     outline: none
     background-color: transparent
+    height: 2rem
 
     &:disabled
       color: #888
@@ -77,9 +78,10 @@ export default Vue.component 'x-input', {
       font-size: 15px
       color: #707589
 
+
   .label
     position: absolute
-    top: .3rem
+    bottom: .3rem
     left: 1rem
     transition: all ease-in-out .3s
     z-index: 1
@@ -88,7 +90,7 @@ export default Vue.component 'x-input', {
 
     &.active,
     &.value
-      top: -1.2rem
+      bottom: 2.2rem
       left: .8rem
       font-size: .8rem
 

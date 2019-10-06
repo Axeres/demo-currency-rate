@@ -1,0 +1,42 @@
+.el-date-editor.el-input
+  width: 100%
+  position: relative
+  margin-top: 1.7rem
+
+  .el-input__inner
+    padding-left: 2.5rem
+    border-radius: 0
+    border: none
+    border-bottom: 1px solid $input-color-light_5
+    font-family: Montserrat
+    font-weight: 400
+    font-size: 1rem
+    color: rgba(0, 0, 0, 0.6)
+    cursor: pointer
+    height: 2rem
+
+    &::placeholder
+      color: rgba(0, 0, 0, .6)
+
+  &:before
+    content: ''
+    position: absolute
+    left: .5rem
+    top: 0rem
+    width: 1.5rem
+    height: 1.5rem
+    background-position: center
+    background-size: contain
+    background-repeat: no-repeat
+    background-image: url('~/assets/icons/calendar.svg')
+
+.el-date-picker__header
+  .el-icon-arrow-left,
+  .el-icon-arrow-right
+    margin-top: 6px
+
+  .el-icon-d-arrow-left,
+  .el-icon-d-arrow-right
+    margin-top: 10px
+
+

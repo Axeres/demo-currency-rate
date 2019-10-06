@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store
 
+
   state:
     loading: false
 
@@ -13,8 +14,9 @@ export default new Vuex.Store
     selectedDate: null
     selectedRate: null
 
-    availableRates: []
+    availableRates: {}
     rates: []
+
 
   mutations:
 
@@ -34,7 +36,8 @@ export default new Vuex.Store
       state.selectedRate = newBaseRate
 
     addAvailableRates: (state, availableRate) ->
-      state.availableRates.push availableRate
+      state.availableRates[availableRate] = availableRate
+
 
   getters:
 
@@ -53,6 +56,7 @@ export default new Vuex.Store
       dispatch 'getRate'
         .then (res) =>
           state.latestDate = res.date
+          state.selectedDate = res.date
 
           for rate of res.rates
             commit 'addAvailableRates', rate

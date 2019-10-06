@@ -6,9 +6,13 @@ routes = [
     path: '/'
     component: require('../layouts/index').default
     children: [
-      path: '/'
-      component: require('../pages/main/mainPage').default
-      name: 'contacts'
+        path: '/'
+        component: require('../pages/main/mainPage').default
+        name: 'mainPage'
+      ,
+        path: '/contacts'
+        component: require('../pages/contacts/contacts').default
+        name: 'contacts'
     ]
   ,
     path: '*'

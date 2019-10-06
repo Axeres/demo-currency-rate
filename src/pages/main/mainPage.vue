@@ -2,22 +2,24 @@
 
 .main-page(v-if = "!$store.state.loading" )
 
-  h1 selectedDate = {{ $store.state.selectedDate }}
-  h1 selectedRate = {{ $store.state.selectedRate }}
+  .filter-block
+    v-select.form-element( v-model = "baseRate"
+                          :options = "availableRates"
+                          placeholder = "Base rate")
 
-  .button(@click = "$store.dispatch('setNewDate', '2011-12-04')") setDate = 2011-12-04
-  .button(@click = "$store.dispatch('setNewDate', '2012-12-04')") setDate = 2012-12-04
-  .button(@click = "$store.dispatch('setNewDate', '2013-12-04')") setDate = 2013-12-04
-  .button(@click = "$store.dispatch('setNewDate', '2014-12-04')") setDate = 2014-12-04
-  .button(@click = "$store.dispatch('setNewDate', '2018-12-04')") setDate = 2018-12-04
-  .button(@click = "$store.dispatch('setNewDate', '2019-12-04')") setDate = 2019-12-04
+    select-multiple.form-element(v-model = "visibleRates"
+                                :options = "availableRates"
+                                placeholder = "Filter rates")
 
-  .button(@click = "$store.dispatch('setNewRate', 'RUB')") setRate = RUB
-  .button(@click = "$store.dispatch('setNewRate', 'USD')") setRate = USD
+    el-date-picker.form-element(v-model = "$store.state.selectedDate"
+                                type="date"
+                                placeholder="Pick a day"
+                                format = "yyyy-MM-dd"
+                                :picker-options="pickerOptions"
+                                :change = "setDate()")
 
-  h3 {{ $store.getters.filteredRates }}
-
-  span.flag-icon.flag-icon-eu
+  table-rates(v-if = "$store.getters.filteredRates"
+              :rates = "$store.getters.filteredRates.rates")
 
 </template>
 
@@ -25,6 +27,31 @@
 
 export default Vue.extend {
 
+  data: ->
+    baseRate: @$store.state.defaultBaseRate
+    visibleRates: []
+    availableRates: @$store.state.availableRates
+
+    pickerOptions:
+      disabledDate: (time) ->
+        return true if time.getFullYear() < 1999
+        return true if time.getDay() is 0 or time.getDay() is 6
+        return true if time.getTime() > Date.now();
+
+      firstDayOfWeek: 1
+
+  watch:
+    baseRate: (newVal) ->
+      @$store.dispatch('setNewRate', newVal)
+
+    visibleRates: (newVal) ->
+      console.log newVal
+
+  methods:
+    setDate: ->
+      return if not @$store.state.selectedDate
+      formatedDate = moment(@$store.state.selectedDate).format('YYYY-MM-DD')
+      @$store.dispatch('setNewDate', formatedDate)
 
 }
 
@@ -36,11 +63,35 @@ export default Vue.extend {
   display: flex
   align-items: center
   flex-direction: column
-  justify-content: center
-  height: calc(100% - #{$heightHeader})
 
   & > div
     margin-bottom: 1rem
+
+
+  .filter-block
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    width: 60%
+    margin-top: 2rem
+    margin-bottom: 2rem
+
+    @media screen and (max-width: 1280px)
+      width: 80%
+
+    @media screen and (max-width: 800px)
+      width: 98%
+      justify-content: center
+
+    .form-element
+      width: 30%
+      min-width: 200px
+
+      @media screen and (max-width: 800px)
+        margin-left: 1rem
+        margin-right: 1rem
+        min-width: 300px
+
 
 
 </style>

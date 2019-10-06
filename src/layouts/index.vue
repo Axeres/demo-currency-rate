@@ -18,7 +18,7 @@ export default
     headerComponent: require('./header/header.vue').default
 
   created: ->
-    # @$store.dispatch 'init'
+    @$store.dispatch 'init'
 
 </script>
 

@@ -1,9 +1,11 @@
 <template lang="pug">
 
 .header
-  .name-company web-app
-  h1
+  .logo
+    include ../../assets/logo.svg
+
   .links
+    router-link.link.main(:to = "{ name: 'mainPage' }") Task
     router-link.link.main(:to = "{ name: 'contacts' }") Contacts
 
 </template>
@@ -21,17 +23,23 @@ export default Vue.extend {
 
 .header
   display: flex
+  flex-wrap: wrap
   align-items: center
-  padding: 0 2rem
+  padding: .5rem 2rem
   background-color: $main-color
-  height: $heightHeader
+  min-height: $heightHeader
 
-  .name-company
-    font-family: 'Roboto'
-    font-size: 1.5rem
-    color: #fff
-    min-width: 15%
-    padding-right: 2rem
+  @media screen and (max-width: 500px)
+    justify-content: center
+
+
+  .logo
+    margin-top: 5px
+    margin-right: 2rem
+
+    svg
+      width: 12rem
+
 
   .links
     display: flex
