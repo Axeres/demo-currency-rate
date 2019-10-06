@@ -93,5 +93,4 @@ export default Vue.extend {
         min-width: 300px
 
 
-
 </style>

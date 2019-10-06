@@ -1,20 +1,13 @@
 import Vue from 'vue'
 import Notifications from 'vue-notification'
 
-import Element from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ru-RU'
 import locale from 'element-ui/lib/locale'
-# import 'element-ui/lib/theme-chalk/index.css'
+import {  DatePicker } from 'element-ui'
 
 locale.use(lang)
 
 Vue.use(Notifications)
-Vue.use(Element)
-
-import {  DatePicker } from 'element-ui'
-
-
-
 Vue.use(DatePicker);
 
 Promise.config

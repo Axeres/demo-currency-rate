@@ -5,7 +5,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store
 
-
   state:
     loading: false
 
@@ -66,7 +65,6 @@ export default new Vuex.Store
 
 
     getRate: ({ state, commit, dispatch }) ->
-
       date = if state.selectedDate then state.selectedDate else 'latest'
       baseRate = if state.selectedRate then state.selectedRate else state.defaultBaseRate
 
