@@ -2,10 +2,12 @@
 
 .table-rates
 
-  .rate(v-for = "rate, key of rates")
-    span.icon.flag-icon(:class = "'flag-icon-' + key.substr(0,2).toLowerCase()")
-    .key  {{ key }}
-    .value {{ rate }}
+  .rate(v-for = "rate, i in rates"
+        :key = "i")
+
+    span.icon.flag-icon(:class = "'flag-icon-' + rate.currency.substr(0,2).toLowerCase()")
+    .currency  {{ rate.currency }}
+    .currency-rate {{ rate.rate }}
 
 
 </template>
@@ -19,10 +21,8 @@ export default Vue.component 'table-rates',
     'rates'
   ]
 
-  data:
+  data: ->
     test: 'asd'
-
-
 
 </script>
 
@@ -50,14 +50,14 @@ export default Vue.component 'table-rates',
     .icon
       font-size:  1.3rem
 
-    .key,
-    .value
+    .currency,
+    .currency-rate
       padding: .5rem 1rem
 
-    .key
+    .currency
       width: 30%
 
-    .value
+    .currency-rate
       width: 50%
 
 </style>

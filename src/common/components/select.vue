@@ -12,18 +12,15 @@
     .value {{ valueItem }}
 
   .select-options.scrollbar(v-show = "showOption" )
-    .option(v-for = "item, i in options" @click = "selectedOption(i)"
-            :key = "i"
-            :class = "{ 'active': i == value}")
+    .option(v-for = "item in listItem" @click = "selectedOption(item)"
+            :key = "item.id"
+            :class = "{ 'active': item.id == value}")
 
-      | {{ item }}
+      | {{ item.name }}
 
 </template>
 
 <script lang="coffee">
-
-# В компонент список передается в формате:
-#  Объект ключ значение - { 'yes': 'Да', 'no': 'Нет' }
 
 export default Vue.component 'v-select',
 
@@ -39,19 +36,17 @@ export default Vue.component 'v-select',
     showOption: false
     selected: null
 
-  created: ->
-    @selected = @options?[0]
-
   mounted: ->
     if @default isnt false and not @value
-      for item of @options
+      for item of @listItem
         @selectedOption(item)
         break
 
   methods:
     selectedOption: (item) ->
-      @$emit('input', item)
-      @val = item
+
+      @$emit('input', item.id)
+      @val = item.name
 
       @showOption = false
 
@@ -60,10 +55,22 @@ export default Vue.component 'v-select',
 
   computed:
     valueItem: ->
-      return @options[@value] if @value
+      return (_.find @listItem, (x) => x?.name is @value)?.name
       return 0
 
+    listItem: ->
+      if _.isArray(@options) or not _.isObject(@options)
+        _(@options)
+          .map (value) -> id: value, name: value
+          .orderBy (x) -> x.name
+          .value()
 
+      else
+        _.map @options, (value, key) -> id: key, name: value
+        _(@options)
+          .map (value) -> id: value, name: value
+          .orderBy (x) -> x.name
+          .value()
 
 
 </script>

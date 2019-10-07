@@ -7,7 +7,7 @@
                           :options = "availableRates"
                           placeholder = "Base rate")
 
-    select-multiple.form-element(v-model = "visibleRates"
+    select-multiple.form-element(v-model = "filterRates"
                                 :options = "availableRates"
                                 placeholder = "Filter rates")
 
@@ -18,8 +18,8 @@
                                 :picker-options="pickerOptions"
                                 :change = "setDate()")
 
-  table-rates(v-if = "$store.getters.filteredRates"
-              :rates = "$store.getters.filteredRates.rates")
+  table-rates(v-if = "$store.getters.visibleRates"
+              :rates = "$store.getters.visibleRates")
 
 </template>
 
@@ -29,7 +29,7 @@ export default Vue.extend {
 
   data: ->
     baseRate: @$store.state.defaultBaseRate
-    visibleRates: []
+    filterRates: @$store.state.filterRates
     availableRates: @$store.state.availableRates
 
     pickerOptions:
@@ -43,9 +43,6 @@ export default Vue.extend {
   watch:
     baseRate: (newVal) ->
       @$store.dispatch('setNewRate', newVal)
-
-    visibleRates: (newVal) ->
-      console.log newVal
 
   methods:
     setDate: ->
@@ -66,7 +63,6 @@ export default Vue.extend {
 
   & > div
     margin-bottom: 1rem
-
 
   .filter-block
     display: flex

@@ -13,8 +13,9 @@ export default new Vuex.Store
     selectedDate: null
     selectedRate: null
 
-    availableRates: {}
+    availableRates: []
     rates: []
+    filterRates: []
 
 
   mutations:
@@ -35,16 +36,25 @@ export default new Vuex.Store
       state.selectedRate = newBaseRate
 
     addAvailableRates: (state, availableRate) ->
-      state.availableRates[availableRate] = availableRate
+      state.availableRates.push availableRate
 
 
   getters:
 
-    filteredRates: (state, getters) ->
+    selectedRates: (state, getters) ->
       date = if state.selectedDate then state.selectedDate else state.latestDate
       baseRate = if state.selectedRate then state.selectedRate else state.defaultBaseRate
 
       return _.find state.rates, { 'date': date, 'base': baseRate }
+
+
+    visibleRates: (state, getters) ->
+      return _(getters.selectedRates.rates)
+        .map (rate, currency) -> return { currency: currency, rate: rate }
+        .filter (rate) ->
+          return true if not state.filterRates.length
+          return state.filterRates.includes rate.currency
+        .value()
 
 
   actions:
@@ -54,10 +64,11 @@ export default new Vuex.Store
 
       dispatch 'getRate'
         .then (res) =>
-          state.latestDate = res.date
-          state.selectedDate = res.date
 
-          for rate of res.rates
+          state.latestDate = res?.date
+          state.selectedDate = res?.date
+
+          for rate of res?.rates
             commit 'addAvailableRates', rate
 
         .finally ->
@@ -86,7 +97,7 @@ export default new Vuex.Store
 
     setNewDate: ({ state, dispatch, getters, commit }, newDate) ->
       commit 'selectedDate', newDate
-      return if getters.filteredRates
+      return if getters.selectedRates
 
       commit 'loadingStart'
 
@@ -100,7 +111,7 @@ export default new Vuex.Store
 
     setNewRate: ({ dispatch, getters, commit }, newRate) ->
       commit 'selectedRate', newRate
-      return if getters.filteredRates
+      return if getters.selectedRates
 
       commit 'loadingStart'
 

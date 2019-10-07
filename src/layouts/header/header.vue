@@ -32,7 +32,6 @@ export default Vue.extend {
   @media screen and (max-width: 500px)
     justify-content: center
 
-
   .logo
     margin-top: 5px
     margin-right: 2rem

@@ -25,9 +25,6 @@
   //.selected-list(v-if = "previewSelected")
       .selected(v-for = "selected of selectedList" @click = "toggleItem(selected)") {{ selected.name }}
 
-
-
-
 </template>
 
 <script lang="coffee">
@@ -74,10 +71,17 @@ export default Vue.component 'select-multiple', {
 
     items: ->
       if _.isArray(@options) or not _.isObject(@options)
-        @options
+        _(@options)
+          .map (value) -> id: value, name: value
+          .orderBy (x) -> x.name
+          .value()
+
       else
         _.map @options, (value, key) -> id: key, name: value
-
+        _(@options)
+          .map (value) -> id: value, name: value
+          .orderBy (x) -> x.name
+          .value()
 
   watch:
     value: () ->
@@ -136,8 +140,6 @@ export default Vue.component 'select-multiple', {
       padding: 0.25rem 0.75rem
       margin: 0.3rem 0.5rem 0 0
       cursor: pointer
-
-
 
 
 </style>
