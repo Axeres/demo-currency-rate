@@ -30,8 +30,8 @@ config =
     new CleanWebpackPlugin()
   ]
 
-#  optimization:
-#    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+ optimization:
+   minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
 
 devWebpackConfig = merge baseWebpackConfig(appPath), config
 

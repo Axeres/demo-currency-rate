@@ -8,7 +8,7 @@ import {  DatePicker } from 'element-ui'
 locale.use(lang)
 
 Vue.use(Notifications)
-Vue.use(DatePicker);
+Vue.use(DatePicker)
 
 Promise.config
   warnings: true
@@ -24,5 +24,4 @@ axios.defaults.headers.common =
   'Accept': 'application/json',
   'Content-Type': 'application/json'
 
-axios.defaults.baseURL = 'http://api-app.dev'
 
