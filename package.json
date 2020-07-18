@@ -19,7 +19,7 @@
     "flag-icon-css": "^3.4.2",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "jquery": "3.4.1",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "moment": "2.22.2",
     "postcss-url": "5.1.2",
     "url-loader": "1.1.1",
